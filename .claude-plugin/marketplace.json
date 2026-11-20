@@ -1,0 +1,13 @@
+{
+  "name": "idea-to-design",
+  "owner": {
+    "name": "swu-tinker"
+  },
+  "plugins": [
+    {
+      "name": "idea-to-design",
+      "source": "./",
+      "description": "Takes a design idea or brief to finished screens. Reads your repo, explores several directions on Claude Design canvases, runs crit, revises, and hands the chosen screens to Figma."
+    }
+  ]
+}
