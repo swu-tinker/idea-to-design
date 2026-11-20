@@ -200,14 +200,14 @@ The captain usually sends crit to the same designer agent who built the directio
 
 - **One sticky per screen** that has findings. Set its `w` to the screen's width, at least 280. Place it 40px below the screen.
 - **Text:** one line per finding, worst first, like `Must fix · UX/UI: Price field is hand-built. Fix: use the system currency field.` Copy the finding's meaning faithfully. Don't soften it.
-- **Color by the worst finding on it:** `red` for must fix, `orange` for should fix, `gray` for nice to have.
+- **Color by the worst finding on it:** `red` for must fix, `orange` for should fix.
 - **One more sticky** for findings not tied to one screen, placed above the round's first row, titled "Overall crit".
 - Publish the updated `canvas.json` before you start any redesign.
 
 **Step 2: Build the next round on a new page.** Copy each screen that needs changes into a new round file (`-r2`), and make the fixes there. Copy unchanged screens too, so the new round is a full, clickable set. Never edit the old round's screens.
 
 - **Must-fix items are required.** Don't argue them away.
-- For other items, fix them or give a real reason in `crit-response.md`. "It fits my direction" isn't enough on its own. Say what would break.
+- **Fix every should-fix item too.** Skip one only if fixing it would break your direction's idea. Then say what would break in `crit-response.md`.
 - Keep your direction's idea. Fix the problem the note points at, not the whole screen.
 - Add one `green` sticky above the new round's first row, titled "What changed". List what you fixed and what you didn't, in a few words each.
 

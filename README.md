@@ -94,7 +94,7 @@ The captain skill has a glossary of these words, under "Words this plugin uses."
 ## What you see on each canvas
 
 - **Baseline page:** today's screens, rebuilt from the code, so you can compare before and after.
-- **Round 1 page:** the first designs. After crit, sticky notes appear below each screen. Red means must fix, orange means should fix, and gray means nice to have.
+- **Round 1 page:** the first designs. After crit, sticky notes appear below each screen. Red means must fix, and orange means should fix.
 - **Round 2 page:** the revised designs, plus a green "What changed" note. Round 1 stays as it was, so you can compare.
 - **More than one view:** each view gets its own row, with a title above it.
 

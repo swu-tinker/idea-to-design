@@ -33,9 +33,10 @@ Write one file for your lens. Use this table, one row per issue:
 
 Severity:
 
-- **Must fix**: breaks a rule, blocks a user, or misses the brief.
-- **Should fix**: clear problem, but users can get by.
-- **Nice to have**: polish.
+- **Must fix**: breaks a rule, blocks a user, or misses the brief. List every one.
+- **Should fix**: clear problem, but users can get by. **At most 3 per direction.** Pick the 3 that matter most for your lens. Drop the rest.
+- Don't write polish notes. The prompter is still picking parts, so polish waits.
+- Don't raise a should fix to must fix to get past the cap.
 
 Rules:
 

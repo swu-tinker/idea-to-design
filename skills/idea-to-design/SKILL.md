@@ -267,7 +267,7 @@ When they finish, sort the findings by direction. **Use the plugin's sort script
    python3 <plugin folder>/scripts/sort-crit.py <run folder> --notes <run folder>/captain-notes.md
    ```
    Leave out `--notes` if you have none. It writes `direction-<x>/crit-to-fix.md` for each direction, must-fix items first, each tagged with its lens. It prints counts per direction.
-3. **Merge must-fix duplicates by hand.** Read only the must-fix rows of each `crit-to-fix.md`. Where two lenses flagged the same problem, keep the most severe copy and drop the other. Leave should-fix and nice-to-have rows as they are. The list tells designer agents to fix overlaps once.
+3. **Merge must-fix duplicates by hand.** Read only the must-fix rows of each `crit-to-fix.md`. Where two lenses flagged the same problem, keep the most severe copy and drop the other. Leave should-fix rows as they are. The list tells designer agents to fix overlaps once.
 4. Read the UX/UI crit's "Ranking" section in `crit/ux.md`. You'll need it at the next pause.
 
 The designer agent copies these findings onto the canvas as sticky notes.
@@ -276,7 +276,7 @@ Crit agents only read the canvases. They never write to them. Each canvas has on
 
 ## Stage 6: Revise ⏸
 
-1. **Send the crit back to the designer agent who built it.** The agent that built a direction knows its canvas and why it made each choice. So it fixes notes without breaking the idea behind them. For each direction, use `SendMessage` to the agent ID from Stage 4. Send all of them in one message so they run at the same time. Tell each: "Crit is in. First, post the crit on your canvas as sticky notes under the round you're revising, and publish. Then build the next round on a new page, without changing the old round. Read `direction-<x>/crit-to-fix.md`. Fix every must-fix item. For other items, fix or explain why not in `direction-<x>/crit-response.md`."
+1. **Send the crit back to the designer agent who built it.** The agent that built a direction knows its canvas and why it made each choice. So it fixes notes without breaking the idea behind them. For each direction, use `SendMessage` to the agent ID from Stage 4. Send all of them in one message so they run at the same time. Tell each: "Crit is in. First, post the crit on your canvas as sticky notes under the round you're revising, and publish. Then build the next round on a new page, without changing the old round. Read `direction-<x>/crit-to-fix.md`. Fix every must-fix and should-fix item. If a should-fix would break your direction's idea, skip it and say why in `direction-<x>/crit-response.md`."
 2. **Start a new designer agent only if the original can't be reached.** This happens when the run picked up in a new session, or the message fails. Start a `designer` agent with `model` and `effort` from the designer settings, and give it the same message plus the run folder path and direction letter. It catches up from `canvas.md` and the crit files. Note its ID as the new owner of that direction.
 3. If `revision_rounds` is 2, run Stage 5 and this step once more, with the same designer agents. Otherwise go on.
 4. ⏸ Show the prompter every canvas link. Each canvas now has round 1 with crit notes, and the new round on its own page. For each direction, give the idea in one line, the top 2 crit fixes made, and the UX/UI crit's ranking. Ask what's next. Options:
