@@ -131,6 +131,13 @@ Before publishing a screen, each designer agent runs one script, `add-screen.mjs
 
 Designer agents use whatever design system that repo uses today. It works with any system, including an in-house one. The scout finds it in the repo's packages and imports. The captain matches it to the systems in Claude Design and only asks you if there's more than one match. If the scout can't tell, the captain asks you which one to use.
 
+The plugin names no design system. It decides what to do from what each system holds in Claude Design.
+
+- **It reads the system's own README first.** Most systems in Claude Design have one. It often says how the parts load, the copy rules, and the known flaws. The captain saves it in the run folder as `design-system-readme.md`. Designer and crit agents read it. Crit agents don't blame a direction for a flaw the system's owners already list.
+- **It saves the system's styles once.** The screen check needs the styles and fonts on your computer. The first run downloads them to `design-runs/_shared/ds/`. Later runs reuse that copy.
+- **It checks for updates each run.** Claude Design gives each system a version stamp. If the stamp changed, the run downloads the styles again. A run that already started keeps the copy it began with, so every direction matches.
+- **A system with no styles to load skips the download.** The run still reads its README.
+
 ## Where things are saved
 
 Each run gets a folder in your current project: `design-runs/<feature>/`.
@@ -153,6 +160,7 @@ It also holds `timings.md`, a time log for the run. When the run ends, the capta
 | `skills/crit-steps/SKILL.md` | Shared review steps and findings format for crit agents. |
 | `skills/design-platform-rules/SKILL.md` | General design rules. A fallback: the repo's own rules come first. |
 | `scripts/sort-crit.py` | Sorts crit findings from one file per lens into one fix list per direction. |
+| `scripts/ds-cache.mjs` | Keeps one saved copy of a design system's styles and fonts for all runs, and checks its version stamp. |
 | `scripts/screen-check/add-screen.mjs` | One command per screen: adds it to `canvas.json`, runs the check, and sets its height. |
 | `scripts/screen-check/check-screens.mjs` | Measures screens in headless Chrome: real height, cut-off text, overlaps, broken links. Changes nothing. |
 | `hooks/register.tsx` | Draws the "Design run" side panel and adds the `/pipeline` command. |
