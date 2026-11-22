@@ -13,11 +13,19 @@ description: Shared review steps and findings format for idea-to-design crit age
 
 ## 2. Look at every screen in every direction
 
-For each canvas:
+**Read the local copy first.** Each designer agent saves its canvas files on this computer, in `<run folder>/direction-<x>/canvas/project/`. Reading them with `Read` is much faster than fetching them from the canvas. Read several screens in one message.
 
-1. List its files with `Artifact` (`action: "list"`, `scope: "files"`, `url: <canvas link>`).
-2. Read `project/canvas.json` to see the screens and pages. Each round of design has its own page (`round-1`, `round-2`, and so on). **Review only the newest round.** Older rounds and the sticky notes on them are history. A `baseline` page, if there is one, shows the product as it is now. Use it for comparison, but don't review it. After a build-out, review the newest "Full flow" page as one flow: check that each seam hands off cleanly and that the whole flow looks like one designer agent made it.
-3. Read each `project/*.dc.html` screen with `Artifact` (`action: "read"`, `path: ...`).
+**Fetch from the canvas only to fill a gap.** Use `Artifact` when the local folder is missing, has no `canvas.json`, or lacks a screen that `canvas.json` lists:
+
+- List the files: `action: "list"`, `scope: "files"`, `url: <canvas link>`.
+- Read one file: `action: "read"`, `url: <canvas link>`, `path: project/<file>`.
+
+If you fetched anything, say which files in one line at the end of your findings file.
+
+For each direction:
+
+1. Read `project/canvas.json` to see the screens and pages. Each round of design has its own page (`round-1`, `round-2`, and so on). **Review only the newest round.** Older rounds and the sticky notes on them are history. A `baseline` page, if there is one, shows the product as it is now. Use it for comparison, but don't review it. After a build-out, review the newest "Full flow" page as one flow: check that each seam hands off cleanly and that the whole flow looks like one designer agent made it.
+2. Read each `project/*.dc.html` screen on the page you're reviewing.
 
 You are reading screen code, not pictures. Judge what the code says: components used, text, labels, colors, sizes, states, and links between screens.
 

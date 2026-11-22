@@ -61,8 +61,8 @@ The captain runs on whatever model and effort your session uses. Start it on Opu
 
 ## What happens
 
-1. **Scout.** A read-only scout finds today's related screens, settings, parts, and copy. It writes them to `context.md`.
-2. **Intake.** The captain asks a few questions if your brief is thin. It skips anything the repo already answers. You confirm the brief and the files the scout read.
+1. **Scout.** A read-only scout finds today's related screens, settings, parts, and copy. It writes them to `context.md`. While it reads, the captain may ask you up to three things a repo can't answer: how you'll know it worked, what must stay the same, and which platform.
+2. **Intake.** The captain asks a few more questions if your brief is thin. It skips anything the repo or you already answered. You confirm the brief and the files the scout read.
 3. **Baseline and directions.** At the same time, one designer agent rebuilds today's screens on a "Baseline" canvas, and the captain writes one direction per designer agent. You check both at once.
 
    Each direction gets a different **change budget**, so you get a real spread:
@@ -72,12 +72,12 @@ The captain runs on whatever model and effort your session uses. Start it on Opu
 
    All three stay with the repo's rules and design system. Each designer agent picks its own layout.
 4. **Design.** The captain makes one Claude Design canvas per direction and sends you the links. Each designer agent copies the baseline screens in first, then designs its direction into them. You watch each canvas fill in.
-5. **Crit.** 4 crit agents review every direction. Each has one focus. The platform crit also checks the fit with today's product.
+5. **Crit.** 4 crit agents review every direction. Each has one focus. They read the screen files saved in the run folder, which is faster than fetching them from the canvas. The platform crit also checks the fit with today's product.
 6. **Revise.** The crit goes back to the same designer agent who built each direction. It posts the crit on the canvas as color-coded sticky notes under round 1. Then it builds round 2 on a new page. You review them all and pick. The captain never ranks the directions, so the pick is yours.
 7. **Build-out (big flows only).** The full flow for the direction you picked, built in parts. See below.
 8. **Handoff.** Your chosen screens go to Figma, after you approve.
 
-It pauses for you at steps 2, 3, 6, 7, and 8.
+It pauses for you at steps 2, 3, 6, 7, and 8. It may also ask early questions during step 1.
 
 ## Big flows: explore first, then build out
 
@@ -136,6 +136,8 @@ Designer agents use whatever design system that repo uses today. It works with a
 Each run gets a folder in your current project: `design-runs/<feature>/`.
 It holds the settings, repo context, brief, directions, canvas links, crit notes, pipeline table, and your decisions.
 You can read it at any time, and a stopped run can pick up from it.
+
+It also holds `timings.md`, a time log for the run. When the run ends, the captain adds a table of minutes per stage, so you can see which stage is slowest.
 
 ## Files in this plugin
 

@@ -85,6 +85,7 @@ The agent files don't set a model or effort on purpose, so this table is the one
 - **Save the settings.** Write the settings this run uses to `settings.md` in the run folder, before Stage 1. Then write `pipeline.md`, as "Pipeline table" says.
 - **Resume.** If `design-runs/<slug>/` already exists, read `settings.md`, `decisions.md`, and `pipeline.md`. Pick up after the last finished stage. Tell the prompter where you're resuming.
 - **Log decisions.** After each pause, add what the prompter chose to `decisions.md`, with the date.
+- **Log times.** Add a line to `timings.md` at each moment "Stage times" lists.
 - **Pause only where marked ⏸.** Between pauses, keep going without asking.
 - **Plain words.** Keep messages to the prompter short. Lead with what you need from them.
 - **Views.** A view is the set of screens one kind of user sees, like an admin view or a client view. Some asks need one view. Others need two or more. Work out how many from the ask. Never add a view the ask doesn't need.
@@ -154,18 +155,48 @@ Baseline: [canvas](<link>) ✓
 - Leave out a header line that has nothing yet. Early on, the file may hold only Stages and Now.
 - Skip the table until the direction canvases exist.
 
+## Stage times
+
+Keep a time log in `timings.md` in the run folder. It shows which stage is slow, so the plugin can be tuned later.
+
+**Add one line at each of these moments:**
+
+- A stage starts or ends.
+- A helper agent starts or finishes.
+- A ⏸ pause starts, and again when the prompter answers.
+
+Use this command, so the time comes from the computer's clock. Never guess a time.
+
+```bash
+echo "$(date '+%Y-%m-%d %H:%M:%S') | <what> | <event>" >> <run folder>/timings.md
+```
+
+- `<what>` is a stage name from the pipeline table, or a helper name like `designer A` or `crit-ux`.
+- `<event>` is `start`, `end`, `waiting`, or `answered`.
+- Only add lines. Never rewrite the file. A resumed run keeps adding to it.
+- Send this command in the same message as your `pipeline.md` update, so it costs no extra turn. Log several moments in one command when they happen together.
+
+**When the run ends,** read `timings.md` and add a short table at the bottom: minutes of work per stage, minutes spent waiting on the prompter, and the slowest helper agent. Tell the prompter the total work time and the slowest stage, in one line.
+
 ## Stage 1: Scout
 
 1. Tell the prompter in one line that you're reading the repo first.
-2. Start one `scout` agent with `model` and `effort` from the scout settings. Give it the repo path, the idea in a few lines, and the run folder.
-3. When it finishes, read `context.md`. Use it in every stage after this one.
+2. Start one `scout` agent with `model` and `effort` from the scout settings. Give it the repo path, the idea in a few lines, and the run folder. It runs in the background.
+3. ⏸ **While the scout reads, ask the early questions.** Don't sit idle. Read what you were given. If it's a file path, read the file. Then check it for these three things, which a repo can't answer:
+   - **Success:** how will we know it worked?
+   - **Limits:** what must stay the same? Any business limits?
+   - **Platform:** web, phone, or both?
+
+   Ask only about the ones the input leaves out, in one `AskUserQuestion` call. Offer good defaults as options. If the input answers all three, ask nothing and wait for the scout. Never ask here about views, screens, where the feature lives, or the design system. The scout may answer those.
+4. Add the answers to `decisions.md`, under "Early questions".
+5. When the scout finishes, read `context.md`. Use it in every stage after this one.
 
 **Why a separate agent:** a big repo means reading many files. The scout reads them, so your own memory stays clear for the calls that need judgment.
 
 ## Stage 2: Intake ⏸
 
-1. Read what you were given. If it's a file path, read the file. Read `context.md`.
-2. Check the input against this list. Skip anything `context.md` already answers.
+1. Read `context.md`. You read the input in Stage 1.
+2. Check the input against this list. Skip anything `context.md` already answers. Skip anything the prompter answered in Stage 1.
    - **Users and views:** who uses this, and which views does the ask need? It may be one view, like just the admin view. It may be several, like an admin view to set something up and a client view to use it. If the ask is unclear, ask the prompter which views are in scope.
    - **Moments:** which screens or steps are in scope?
    - **Where it lives:** if `context.md` lists more than one good home, ask which one.
@@ -178,7 +209,7 @@ Baseline: [canvas](<link>) ✓
    - **The scout couldn't tell:** ask the prompter which system to use. Offer the list as options.
    - **No match in the list:** tell the prompter the repo's system isn't in Claude Design yet. Ask which listed system is closest, or whether to go without one.
    - Never switch to a different system than the repo's on your own.
-4. If anything is missing, ask the prompter. Include any design system question from step 3. Ask at most 5 questions, in one `AskUserQuestion` call where you can. Offer good defaults as options.
+4. If anything is missing, ask the prompter. Include any design system question from step 3. Ask at most 5 questions across Stage 1 and this stage, in one `AskUserQuestion` call where you can. Offer good defaults as options.
 5. Write `brief.md` with these headings: Problem, Users and views, Where it lives, Screens in scope, Limits, Success, Platform and design system, Open questions.
 6. ⏸ Show a 5-line summary of the brief and the run settings. Name the design system and say where it came from, like "<system name> (from the repo)." Also list the files the scout read, in one short line each, so the prompter can catch a wrong area. Ask: "Is this brief right?" Options: looks good / I'll edit it.
 
