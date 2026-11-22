@@ -228,13 +228,19 @@ echo "$(date '+%Y-%m-%d %H:%M:%S') | <what> | <event>" >> <run folder>/timings.m
 
 ## Stage 3: Baseline and directions ⏸
 
-These two run at the same time. The baseline doesn't need the directions.
+**First, write `sample-data.md`.** It holds the sample content every screen in this run shows: the same people, names, numbers, dates, and records. Then the prompter compares designs, not made-up details. Keep it under 40 lines.
+
+- Use only the data listed under "Data we have today" in `context.md`. Use real-sounding values that fit the product.
+- Cover the cases screens will need: a normal record, a long name, and an empty or new account.
+- If the idea needs data the product doesn't have, list it under a "Needs new data" heading, with one line on why.
+
+Then start these two. They run at the same time. The baseline doesn't need the directions.
 
 **Baseline (only when `context.md` lists screens to rebuild).** Skip it if the scout wrote "None".
 
 1. Call `Artifact` with `action: "quickstart"` and `intent: "design"` to get the Design type link. Keep it for Stage 4.
 2. Make the baseline canvas: publish once with that `type_url`, a `title` like "<Feature> – Baseline", and `auto_open: "after_first_write"`. Send no files.
-3. Start one `designer` agent in the background, with `model` and `effort` from the designer settings. Tell it: "Your job is the baseline rebuild." Give it the run folder, the baseline canvas link, the design system, and the plugin folder. Also give it the design system's link and version stamp, and the line `ds-cache.mjs` printed in Stage 2, so it knows whether to download the styles.
+3. Start one `designer` agent in the background, with `model` and `effort` from the designer settings. Tell it: "Your job is the baseline rebuild." Give it the run folder, the baseline canvas link, the design system, and the plugin folder. Also give it the design system's link and version stamp, and the line `ds-cache.mjs` printed in Stage 2, so it knows whether to download the styles. Tell it to use `sample-data.md` for any content the code doesn't fix, like names and counts.
 
 **Directions.** While the baseline builds, write one direction per designer agent in `directions.md`. Ground every direction in `context.md`: it should fit next to what's on the page today. Directions must differ in a real way: a different idea of the feature, not just a different look.
 
@@ -287,6 +293,7 @@ For each direction, write:
 - Which direction it owns, by letter, and its change budget.
 - **Its canvas link.** Tell it to use that canvas and not make its own.
 - The design system to use.
+- "Use the sample content in `sample-data.md`, so every direction shows the same people and numbers."
 - The plugin folder, for the screen check.
 - **The baseline screens,** if there are any: "Start from the baseline screens in `baseline/canvas/project/`. Copy them onto your canvas first, then design your direction into them, as far as your change budget allows."
 - **For a big flow:** "Build only the key moments listed in `directions.md`, not the full screen list."

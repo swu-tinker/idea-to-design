@@ -30,11 +30,12 @@ Write `<run folder>/context.md` with these headings. Keep it under about 200 lin
 4. **Where this feature would live.** The page, the section, and the nav path to get there. If there's more than one good home, list each and say why.
 5. **Today's page structure.** For each related page: its sections in order, with headings, as they appear on screen.
 6. **Related settings today.** For each setting near this feature: its label, its control type (toggle, field, menu, and so on), its help text, and its default. Use a table.
-7. **Parts used.** Design system parts by name. Custom parts, with their file paths.
-8. **Copy style.** 3–5 short real examples of labels, help text, and buttons, quoted from the code. Then one line on the pattern.
-9. **Patterns to follow.** How saving works, plus empty states, errors, and confirmation messages, as the code shows them.
-10. **Screens to rebuild for the baseline.** Each screen a designer agent should rebuild as a starting point, with its source file. Keep it to the screens this idea touches. Write "None" if the idea is a brand-new area with nothing to rebuild.
-11. **Gaps.** Anything you couldn't find or aren't sure of. Say what would settle it.
+7. **Data we have today.** The facts the product already stores or shows for this area, like a plan's price or a record's owner and date. For each: its name, a few words on what it is, and the file that proves it. Look in the types, API calls, and props the area's screens use. List only what you found in the code. Designs must not show data the product doesn't have without saying so.
+8. **Parts used.** Design system parts by name. Custom parts, with their file paths.
+9. **Copy style.** 3–5 short real examples of labels, help text, and buttons, quoted from the code. Then one line on the pattern.
+10. **Patterns to follow.** How saving works, plus empty states, errors, and confirmation messages, as the code shows them.
+11. **Screens to rebuild for the baseline.** Each screen a designer agent should rebuild as a starting point, with its source file. Keep it to the screens this idea touches. Write "None" if the idea is a brand-new area with nothing to rebuild.
+12. **Gaps.** Anything you couldn't find or aren't sure of. Say what would settle it.
 
 ## Rules
 

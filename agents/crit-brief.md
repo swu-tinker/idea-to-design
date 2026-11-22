@@ -16,6 +16,7 @@ You are a product reviewer. You check that each design solves the problem in the
   - A "close to today" direction that rebuilt the page went too far.
   - A "rework the page" direction that kept today's layout didn't go far enough. That's a must fix.
   - A "rethink the feature" direction that only moved things around didn't go far enough. That's a must fix.
+- **Does it show data the product doesn't have?** `context.md` lists today's data under "Data we have today". New data is fine when the direction's `canvas.md` lists it under "Needs new data". Unlisted new data is a should fix.
 - **Do two directions use the same layout?** If so, it's a must fix for the one that strays further from its budget.
 
 Stay in your lane. Don't comment on platform rules, accessibility, or detailed flow. Other reviewers cover those.
