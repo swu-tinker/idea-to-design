@@ -125,7 +125,7 @@ If you close the panel, type `/pipeline` to open it again. The panel shows the n
 
 ## Designer agents check each screen once
 
-Before publishing a screen, each designer agent measures it in a hidden copy of Chrome on your computer. The check reports the real page height, cut-off text, overlapping text, and broken links. The designer agent fixes what's listed once, then publishes. There's no re-check, so it can't loop. It needs Google Chrome, with no other installs. Without Chrome, the check is skipped.
+Before publishing a screen, each designer agent runs one script, `add-screen.mjs`. It adds the screen to the canvas file, measures it in a hidden copy of Chrome on your computer, and sets the real page height. It also reports cut-off text, overlapping text, and broken links. The designer agent fixes what's listed once, then publishes. There's no re-check, so it can't loop. It needs Google Chrome, with no other installs. Without Chrome, the check is skipped.
 
 ## Which design system it uses
 
@@ -153,7 +153,8 @@ It also holds `timings.md`, a time log for the run. When the run ends, the capta
 | `skills/crit-steps/SKILL.md` | Shared review steps and findings format for crit agents. |
 | `skills/design-platform-rules/SKILL.md` | General design rules. A fallback: the repo's own rules come first. |
 | `scripts/sort-crit.py` | Sorts crit findings from one file per lens into one fix list per direction. |
-| `scripts/screen-check/` | Measures each screen in headless Chrome before it's published: real height, cut-off text, overlaps, broken links. |
+| `scripts/screen-check/add-screen.mjs` | One command per screen: adds it to `canvas.json`, runs the check, and sets its height. |
+| `scripts/screen-check/check-screens.mjs` | Measures screens in headless Chrome: real height, cut-off text, overlaps, broken links. Changes nothing. |
 | `hooks/register.tsx` | Draws the "Design run" side panel and adds the `/pipeline` command. |
 | `hooks/parse.ts` | Reads `pipeline.md` into the parts the panel draws. |
 

@@ -110,9 +110,9 @@ The captain says "Your job is segment <name>." You're one of several designer ag
 
 1. Read `plan.md`, `spine.md`, and the spine files. Follow `spine.md` exactly: the same parts, file names, and sample data.
 2. Build only your segment's screens, in flow order. Start from the last screen of the segment before yours (it's in `plan.md`), so your first screen picks up where that one leaves off.
-3. **Never publish, and never touch any canvas.** Other designer agents are working at the same time. Write your files only, in `<run folder>/buildout/<segment>/project/`, with a `canvas.json` there that lists your screens and their sizes.
+3. **Never publish, and never touch any canvas.** Other designer agents are working at the same time. Write your files only, in `<run folder>/buildout/<segment>/project/`. Start a `canvas.json` there with just `{"boards": {}, "order": []}`. The add-screen script fills in your screens and their sizes.
 4. Link your screens to each other. For the link out of your last screen, use the next segment's first file name from `plan.md`, even though that file isn't yours.
-5. Run the screen check on each screen, as usual, against your segment's folder. A link to the next segment will show as broken, since that file is in another folder. That's expected.
+5. Run the add-screen script on each screen, as usual, against your segment's folder. A link to the next segment will show as broken, since that file is in another folder. That's expected.
 6. Write `<run folder>/buildout/<segment>/notes.md`: your screens in order, anything you had to guess, and anything the stitch needs to know.
 
 ### The stitch
@@ -123,7 +123,7 @@ The captain says "Your job is the stitch." Every segment is done.
 2. Add a "Full flow" page to your canvas. Copy every segment's screens onto it, in flow order. Give each segment its own row, with a `title1` note above it naming the segment.
 3. **Fix the seams.** Every link from one segment to the next must open the right screen. The step bar must show the right step on every screen. Shared things must match across segments: totals, names, button labels.
 4. **Fix only seams and mismatches. Don't redesign** a segment's screens. If something is badly wrong, note it in `stitch.md` for crit.
-5. Run the screen check on the full flow, then publish, one screen at a time as usual.
+5. Run the add-screen script on each full-flow screen, with `--page` and `--page-name "Full flow"`. Publish one screen at a time, as usual.
 6. Write `<run folder>/buildout/stitch.md`: what you changed, by screen, and anything you left for crit.
 
 ## Use the real design system
@@ -155,30 +155,48 @@ The canvas runs React 18. Some design system bundles ship their own, newer React
 
 **If you write the render script,** save it as `<run folder>/render/render.mjs` with a short `README.md`. The README should say how to run it, how to add a screen, and the gotchas above. Then the next designer agent can reuse it.
 
-## Check each screen before you publish it
+## Add and check each screen with one command
 
-The prompter asks you to check your screens. Do it once per screen, with the plugin's check script, before you publish that screen. It measures the screen in a hidden copy of Chrome on this computer. Nothing goes anywhere but your canvas.
+The prompter asks you to check your screens. Do it once per screen, before you publish that screen. The plugin's `add-screen.mjs` script does it in one command. **Use it. Don't write your own helper script for these steps.**
 
-The captain gives you the script's path: `<plugin folder>/scripts/screen-check/check-screens.mjs`.
+The script adds the screen to `canvas.json`, measures it in a hidden copy of Chrome on this computer, and sets the right height. Nothing goes anywhere but your canvas. It never publishes.
 
-1. Write the screen file and its `canvas.json` entry as usual.
-2. Run the check on that screen:
+The captain gives you the plugin folder. The script is at `<plugin folder>/scripts/screen-check/add-screen.mjs`.
+
+1. Write the screen file. Don't add it to `canvas.json` by hand.
+2. Run the script on that screen:
    ```bash
-   node <plugin folder>/scripts/screen-check/check-screens.mjs <your canvas folder>/project --ds <run folder>/render/ds/<folder> <Screen>.dc.html
+   node <plugin folder>/scripts/screen-check/add-screen.mjs <your canvas folder>/project <Screen>.dc.html --w 1440 --title "<board title>" --expand fill --ds <run folder>/render/ds/<folder>
    ```
-   It prints one line, like `StyleGlance-r2.dc.html: frame 1900px → set h to 1674 (226px empty) | 6 cut-off text`.
-3. **Fix what it lists, once:**
-   - **Frame height:** set the screen's `h` in `canvas.json` to the suggested number. Also change any fixed height on the screen's own wrapper to match. A dialog screen that "fits" keeps its height.
+   - `--w` is the frame width. A new screen needs it.
+   - The page comes from the file name: `Baseline-*` goes on `baseline`, `*-r2` on `round-2`, and anything else on `round-1`. Pass `--page <id>` and `--page-name "<name>"` for other pages, like "Spine" or "Full flow". A new page is added for you.
+   - The screen goes to the right of the last one in its row. Pass `--y <px>` to start or join another row, like a second view. Pass `--x <px>` to place it yourself.
+   - Add `--interactive` only if the screen has working links.
+   - Leave out `--h`. The script measures the height and sets it in `canvas.json` and in the screen file.
+   - A screen already on the canvas keeps its place. Only the options you pass change.
+
+   It prints a few lines, like:
+   ```
+   Plans-r2.dc.html: added on page round-2 at x 1520, y 0, 1440×900
+   Plans-r2.dc.html: frame 900px → set h to 1674 (content is cut off) | 6 cut-off text
+   Height set: 900 → 1674 in canvas.json, and in the screen file (preview size).
+   Still yours to fix by hand: cut-off text (fix only if it hides something needed). Don't run this again on this screen.
+   ```
+3. **Fix what it leaves for you, once:**
+   - **Frame height:** the script already set it. A dialog screen that "fits" keeps its height.
    - **Broken links:** fix every one.
    - **Overlapping text:** fix it. Two pieces of text shouldn't sit on top of each other.
    - **Cut-off text:** look at it, but it's not automatically a bug. Some cut-offs are on purpose, like a long name in a small preview. Fix it only if it hides something the person needs, like the one thing that tells two items apart.
-4. Publish. **Don't run the check again on that screen.** One check, one fix pass, then move on.
+4. Publish. **Don't run the script again on that screen.** One check, one fix pass, then move on.
 
 **Rules:**
 - Fix only what the check lists. Don't use the check as a reason to redesign or polish. Crit handles design quality.
-- If the script says no Chrome was found, skip the check. Note that in `canvas.md` and keep going.
-- The check only works on screens rendered to static HTML. If the design system runs live on the canvas with `x-import`, skip the check and say so in `canvas.md`.
+- If the script says no Chrome was found, the screen is still added. Note the skipped check in `canvas.md` and keep going.
+- The check only works on screens rendered to static HTML. If the design system runs live on the canvas with `x-import`, pass `--no-check` in place of `--ds`. The script then only adds the screen. Say so in `canvas.md`.
 - Add `--screenshot` only if a cut-off or overlap is unclear and you need to see it. It saves a PNG in the check folder.
+- For `Baseline-` copies on your canvas, pass `--no-check` and the `--h` from the baseline's own `canvas.json`. The check skips those files, since the baseline rebuild already checked them.
+- You still write sticky notes, `launch`, and `designSystems` in `canvas.json` yourself. The script only touches screens and pages.
+- To check screens without changing anything, `check-screens.mjs` in the same folder still works.
 
 ## What to build
 

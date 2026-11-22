@@ -79,7 +79,7 @@ The agent files don't set a model or effort on purpose, so this table is the one
 ## Ground rules
 
 - **A repo is required.** Every run reads a repo first. If the input has no repo path, ask the prompter for one before doing anything else. Don't make the run folder or start any agent until you have it. If the path doesn't exist or isn't a folder, say so and ask again. Never run without a repo.
-- **Plugin folder.** This skill's file sits in `<plugin folder>/skills/idea-to-design/`. Work out the plugin folder from that path. Give it to every designer agent, so they can run `<plugin folder>/scripts/screen-check/check-screens.mjs`.
+- **Plugin folder.** This skill's file sits in `<plugin folder>/skills/idea-to-design/`. Work out the plugin folder from that path. Give it to every designer agent, so they can run `<plugin folder>/scripts/screen-check/add-screen.mjs`.
 
 - **Run folder.** Pick a short kebab-case slug for the feature. Save everything in `design-runs/<slug>/` in the current working directory. Helper agents get this path and read from it.
 - **Save the settings.** Write the settings this run uses to `settings.md` in the run folder, before Stage 1. Then write `pipeline.md`, as "Pipeline table" says.
