@@ -73,7 +73,7 @@ The captain runs on whatever model and effort your session uses. Start it on Opu
    All three stay with the repo's rules and design system. Each designer agent picks its own layout.
 4. **Design.** The captain makes one Claude Design canvas per direction and sends you the links. Each designer agent copies the baseline screens in first, then designs its direction into them. You watch each canvas fill in.
 5. **Crit.** 4 crit agents review every direction. Each has one focus. The platform crit also checks the fit with today's product.
-6. **Revise.** The crit goes back to the same designer agent who built each direction. It posts the crit on the canvas as color-coded sticky notes under round 1. Then it builds round 2 on a new page. You review them all.
+6. **Revise.** The crit goes back to the same designer agent who built each direction. It posts the crit on the canvas as color-coded sticky notes under round 1. Then it builds round 2 on a new page. You review them all and pick. The captain never ranks the directions, so the pick is yours.
 7. **Build-out (big flows only).** The full flow for the direction you picked, built in parts. See below.
 8. **Handoff.** Your chosen screens go to Figma, after you approve.
 
@@ -98,20 +98,30 @@ The captain skill has a glossary of these words, under "Words this plugin uses."
 - **Round 2 page:** the revised designs, plus a green "What changed" note. Round 1 stays as it was, so you can compare.
 - **More than one view:** each view gets its own row, with a title above it.
 
-## Track progress in chat
+## Track progress in the side panel
 
-From the design stage on, the captain prints a small pipeline table in chat. It reprints the table each time an agent finishes:
+A "Design run" panel opens beside the chat when a run starts. It updates on its own as the run moves. It shows:
+
+- Every stage, from Setup to Figma, with a mark for done, working, or not started.
+- What is happening right now.
+- Each helper agent and its status.
+- A "Waiting on you" box when the captain needs your answer.
+- The direction table, once the canvases exist:
 
 ```
-Baseline: canvas ↗ ✓
+Baseline: canvas ✓
 
 My feature         Round 1    Crit      Round 2    Your pick    Figma
-Dir A ↗            ✓          ✓ 4/4     ● working  ○            ○
-Dir B ↗            ✓          ✓ 4/4     ✓          ○            ○
-Dir C ↗            ● working  ○         ○          ○            ○
+Dir A              ✓          ✓ 4/4     ● working  ○            ○
+Dir B              ✓          ✓ 4/4     ✓          ○            ○
+Dir C              ● working  ○         ○          ○            ○
 ```
 
-Each direction name links to its canvas. The table also saves to `pipeline.md` in the run folder.
+Each direction name links to its canvas.
+
+The captain doesn't print this table in chat. In chat, it sends short one-line updates.
+
+If you close the panel, type `/pipeline` to open it again. The panel shows the newest run that changed in the last 24 hours. It reads `pipeline.md` in the run folder, which the captain rewrites at every step.
 
 ## Designer agents check each screen once
 
@@ -135,13 +145,15 @@ You can read it at any time, and a stopped run can pick up from it.
 | `agents/scout.md` | Reads the repo, read-only, and writes `context.md`. |
 | `agents/designer.md` | Builds one direction on a canvas. One copy runs per direction. Also does the baseline rebuild. |
 | `agents/crit-platform.md` | Checks design platform rules. |
-| `agents/crit-ux.md` | Checks UX and UI: flow, clarity, edge cases, layout, and hierarchy. Ranks the directions. |
+| `agents/crit-ux.md` | Checks UX and UI: flow, clarity, edge cases, layout, and hierarchy. |
 | `agents/crit-a11y.md` | Checks accessibility. |
 | `agents/crit-brief.md` | Checks that the design solves the brief. |
 | `skills/crit-steps/SKILL.md` | Shared review steps and findings format for crit agents. |
 | `skills/design-platform-rules/SKILL.md` | General design rules. A fallback: the repo's own rules come first. |
 | `scripts/sort-crit.py` | Sorts crit findings from one file per lens into one fix list per direction. |
 | `scripts/screen-check/` | Measures each screen in headless Chrome before it's published: real height, cut-off text, overlaps, broken links. |
+| `hooks/register.tsx` | Draws the "Design run" side panel and adds the `/pipeline` command. |
+| `hooks/parse.ts` | Reads `pipeline.md` into the parts the panel draws. |
 
 ## To do before the first real run
 

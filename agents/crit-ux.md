@@ -29,4 +29,4 @@ Stay in your lane. Don't comment on platform rule details, accessibility, or bri
 
 Load the `crit-steps` skill and follow it. Write your findings to `<run folder>/crit/ux.md`.
 
-After the findings table, add a short **Ranking** section. Rank the directions from best to worst UX/UI, with one line each on why. The prompter reads this when picking a direction.
+Don't rank the directions or say which one is best. The prompter picks, and a ranking would sway them.

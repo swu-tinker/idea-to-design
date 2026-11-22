@@ -65,8 +65,6 @@ When there are baseline screens, they are your starting point, not a limit.
 
 **You pick the layout.** The captain doesn't. Choose the one that best serves your direction's bet, like a single list, cards, two panes, or steps. Write your choice and why in `canvas.md`.
 
-Without baseline screens, "today" means `context.md`, or the way most products handle this feature now.
-
 ## The baseline rebuild
 
 Sometimes the captain gives you a different job: "Your job is the baseline rebuild." Then you aren't designing anything new. You rebuild what exists today from the code, so every designer agent starts from the same accurate picture.
