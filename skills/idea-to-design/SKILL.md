@@ -205,6 +205,7 @@ echo "$(date '+%Y-%m-%d %H:%M:%S') | <what> | <event>" >> <run folder>/timings.m
    - **Limits:** what must stay the same? Any tech or business limits?
    - **Success:** how will we know it worked?
    - **Platform:** web, phone, or both?
+   - **Gaps the prompter hasn't thought of:** compare the ask with `context.md`. Pick up to 3 things the ask leaves out that would change the design. Ask which to include. Don't decide alone.
 3. **Pick the design system.** Use the one the repo uses, so designs match what ships today.
    - List the Claude Design systems you can use: `Artifact` with `action: "list"` and `type: "Design System"`.
    - Match the system named in `context.md` to that list, by package name or brand name. If exactly one matches, use it without asking. If several match (for example, two versions of the same system), ask the prompter which one. If the repo uses more than one system, use the one this area uses.

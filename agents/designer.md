@@ -72,6 +72,7 @@ When there are baseline screens, they are your starting point, not a limit.
 Sometimes the captain gives you a different job: "Your job is the baseline rebuild." Then you aren't designing anything new. You rebuild what exists today from the code, so every designer agent starts from the same accurate picture.
 
 - Read `<run folder>/context.md`. Rebuild each screen listed under "Screens to rebuild for the baseline." Open each screen's source file and match it.
+- Draw each screen inside the app's frame, like its nav and side panels, as the code lays it out.
 - **Copy what's there. Don't improve it.** Use the same sections, order, labels, help text, controls, and defaults as the code. Don't fix things you think are wrong.
 - Where the code doesn't fix the content, like a person's name or a count, use `<run folder>/sample-data.md`.
 - Use the design system's real parts wherever the code uses them. Where the code uses a custom part, rebuild it as closely as you can from its source.

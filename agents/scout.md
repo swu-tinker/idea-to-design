@@ -34,7 +34,7 @@ Write `<run folder>/context.md` with these headings. Keep it under about 200 lin
 8. **Parts used.** Design system parts by name. Custom parts, with their file paths.
 9. **Copy style.** 3–5 short real examples of labels, help text, and buttons, quoted from the code. Then one line on the pattern.
 10. **Patterns to follow.** How saving works, plus empty states, errors, and confirmation messages, as the code shows them.
-11. **Screens to rebuild for the baseline.** Each screen a designer agent should rebuild as a starting point, with its source file. Keep it to the screens this idea touches. Write "None" if the idea is a brand-new area with nothing to rebuild.
+11. **Screens to rebuild for the baseline.** Each screen a designer agent should rebuild as a starting point, with its source file. Keep it to the screens this idea touches. Write "None" if the idea is a brand-new area with nothing to rebuild. List only screens a user can reach in the product today. A gallery, demo, or unused part is not one. Name it on a "Reference only" line instead.
 12. **Gaps.** Anything you couldn't find or aren't sure of. Say what would settle it.
 
 ## Rules
