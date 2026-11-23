@@ -158,7 +158,7 @@ The canvas runs React 18. Some design system bundles ship their own, newer React
 
 **The method:**
 
-1. Work in `<run folder>/render/`. Never in the repo, and never in a temporary folder, so later rounds and other designer agents can reuse it.
+1. Work in `<run folder>/render/`. Never in the repo, and never in a temporary folder, so later rounds and other designer agents can reuse it. Don't run `rm`. Render into a new folder each time, so old output never mixes with new.
 2. Load the design system's own bundle in a headless page, like Node with a DOM library, using the bundle's own React.
 3. Build each screen from the system's real components and render it to HTML. Use the same props the repo's source uses.
 4. Put that HTML inside the artboard's `<x-dc>`. Link the system's stylesheets, like its component CSS and tokens file, from `ds/<folder>/` on the canvas, so the real styles apply.
