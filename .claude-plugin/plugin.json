@@ -1,6 +1,6 @@
 {
   "name": "idea-to-design",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Takes a design idea or brief to finished screens. Explores several directions on Claude Design canvases, runs crit, revises, and hands the chosen screens to Figma. Pauses when the prompter needs to decide.",
   "types": "./types/index.d.ts"
 }
